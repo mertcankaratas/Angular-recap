@@ -1,3 +1,5 @@
+import { Rental } from './../../models/rental';
+import { RentalService } from './../../services/rentalService/rental.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rentals.component.css']
 })
 export class RentalsComponent implements OnInit {
-
-  constructor() { }
+  rentals:Rental[]=[];
+  constructor(private rentalService:RentalService) { }
 
   ngOnInit(): void {
+    this.getRentals();
+  }
+
+  getRentals(){
+      this.rentalService.getRentals().subscribe(response=>{
+        this.rentals=response.data
+      })
   }
 
 }
