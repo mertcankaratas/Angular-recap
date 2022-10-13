@@ -2,6 +2,7 @@ import { CarService } from './../../services/carService/car.service';
 import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { ActivatedRoute } from '@angular/router';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-car',
@@ -16,7 +17,11 @@ export class CarComponent implements OnInit {
     this.activatedRoute.params.subscribe(params=>{
       if(params["colorId"]){
           this.getCarsByColor(params["colorId"])
-      }else{
+      }
+      else if(params["brandId"]){
+        this.getCarByBrandId(params["brandId"])
+      }
+      else{
         this.getCars();
       }
     })
@@ -33,6 +38,12 @@ export class CarComponent implements OnInit {
     this.carService.getCarsByColor(colorId).subscribe(response=>{
       this.cars=response.data
 
+    })
+  }
+
+  getCarByBrandId(brandId:number){
+    this.carService.getCarsByBrandId(brandId).subscribe(response=>{
+      this.cars=response.data
     })
   }
 
