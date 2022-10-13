@@ -1,6 +1,7 @@
 import { CarService } from './../../services/carService/car.service';
 import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-car',
@@ -9,10 +10,17 @@ import { Car } from 'src/app/models/car';
 })
 export class CarComponent implements OnInit {
   cars:Car[]=[];
-  constructor(private carService:CarService) { }
+  constructor(private carService:CarService,private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCars();
+    this.activatedRoute.params.subscribe(params=>{
+      if(params["colorId"]){
+          this.getCarsByColor(params["colorId"])
+      }else{
+        this.getCars();
+      }
+    })
+
   }
 
   getCars(){
@@ -20,5 +28,13 @@ export class CarComponent implements OnInit {
       this.cars=response.data
     })
   }
+
+  getCarsByColor(colorId:number){
+    this.carService.getCarsByColor(colorId).subscribe(response=>{
+      this.cars=response.data
+
+    })
+  }
+
 
 }

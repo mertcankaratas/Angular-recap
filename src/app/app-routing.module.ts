@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path:"",pathMatch:"full",component:CarComponent},
   {path:"cars/color/:id",component:CarComponent},
-  {path:"cars/brand/:id",component:CarComponent}
+  {path:"cars/brand/:colorId",component:CarComponent}
 
 ];
 
